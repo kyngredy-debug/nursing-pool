@@ -2,7 +2,7 @@
 
 ## Prova de conceito computacional para uma camada derivada NANDA-I/NOC/NIC no MIMIC-IV Demo
 
-**Autores:** Ryan de Paulo Santos, Kerolyne Yngredy Rodrigues Santos
+**Autores:** Kerolyne Yngredy Rodrigues Santos, Ryan de Paulo Santos, Karla Rangel Ribeiro
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Status: Proof of Concept](https://img.shields.io/badge/Status-Proof%20of%20Concept-orange.svg)]()
