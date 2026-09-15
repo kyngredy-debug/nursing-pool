@@ -42,30 +42,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copiar scripts do pipeline
-COPY config.R .
-COPY theme_cellpress.R .
-COPY synthetic_data.R .
-COPY requirements.R .
-COPY 01_data_access.R .
-COPY 02_nursing_mapping.R .
-COPY 03_nanda_diagnostics.R .
-COPY 04_noc_outcomes.R .
-COPY 05_nic_interventions.R .
-COPY 06_nursing_db.R .
-COPY 07_statistical_analysis.R .
-COPY 08_visualization.R .
-COPY 09_audit.R .
-COPY 10_benchmark.R .
-COPY pipeline.R .
+COPY R/config.R R/
+COPY R/theme_cellpress.R R/
+COPY R/synthetic_data.R R/
+COPY R/requirements.R R/
+COPY R/01_data_access.R R/
+COPY R/02_nursing_mapping.R R/
+COPY R/03_nanda_diagnostics.R R/
+COPY R/04_noc_outcomes.R R/
+COPY R/05_nic_interventions.R R/
+COPY R/06_nursing_db.R R/
+COPY R/07_statistical_analysis.R R/
+COPY R/08_visualization.R R/
+COPY R/09_audit.R R/
+COPY R/10_benchmark.R R/
+COPY R/pipeline.R R/
 
 # Criar diretórios de saída
 RUN mkdir -p output/cache output/figures
 
 # Instalar pacotes R
-RUN Rscript requirements.R
+RUN Rscript R/requirements.R
 
 # Ponto de entrada
-ENTRYPOINT ["Rscript", "pipeline.R"]
+ENTRYPOINT ["Rscript", "R/pipeline.R"]
 
 # Argumentos padrão: modo sintético
 CMD ["--mode=synthetic"]

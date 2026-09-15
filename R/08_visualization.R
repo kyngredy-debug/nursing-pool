@@ -5,7 +5,7 @@
 # Salva em PDF (vetorial) e PNG (raster, 300 DPI) para publicação.
 # =============================================================================
 
-source(here::here("theme_cellpress.R"))
+source(here::here("R/theme_cellpress.R"))
 
 # --- Helper para salvar em múltiplos formatos ---
 salvar_figura <- function(plot, nome, width = 8, height = 5.5, dpi = 300) {
@@ -676,11 +676,11 @@ gerar_todas_figuras <- function(nanda, noc, nic, stat_results = NULL) {
 
 # Executar se chamado diretamente
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
-  source(here::here("03_nanda_diagnostics.R"))
-  source(here::here("04_noc_outcomes.R"))
-  source(here::here("05_nic_interventions.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
+  source(here::here("R/03_nanda_diagnostics.R"))
+  source(here::here("R/04_noc_outcomes.R"))
+  source(here::here("R/05_nic_interventions.R"))
 
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   nanda <- extract_nanda_diagnostics(data)

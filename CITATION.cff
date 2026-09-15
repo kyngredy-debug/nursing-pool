@@ -10,7 +10,7 @@ authors:
     orcid: "https://orcid.org/0009-0005-6770-2001"
   - family-names: "Ribeiro"
     given-names: "Karla Rangel"
-repository-code: "https://github.com/santosry/nursing-pool"
+repository-code: "https://github.com/kyngredy-debug/nursing-pool"
 abstract: "Pipeline em Python para construir uma camada derivada, exploratória, auditável e não validada clinicamente com hipóteses computacionais NANDA-I, indicadores NOC operacionalizados, proxies observáveis de intervenções NIC e recomendações NIC derivadas por regras NNN a partir do MIMIC-IV Demo v2.2."
 keywords:
   - "Informática em Enfermagem"

@@ -33,7 +33,7 @@ from matplotlib.ticker import FuncFormatter
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 from scipy import stats
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 FIG_DIR = os.path.join(BASE_DIR, "output", "figures")
 OUT_DIR = os.path.join(BASE_DIR, "output")

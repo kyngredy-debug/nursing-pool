@@ -56,4 +56,4 @@ for (pkg in cran_packages) {
 
 message("\n[INSTALL] Todas as dependências instaladas com sucesso!")
 message("[INSTALL] Pipeline pronto para execução.")
-message("[INSTALL] Execute: Rscript pipeline.R")
+message("[INSTALL] Execute: Rscript R/pipeline.R")

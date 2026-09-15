@@ -166,8 +166,8 @@ save_nic_results <- function(nic_data) {
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   nic_raw <- extract_nic_interventions(data)
   nic_processed <- process_nic_interventions(nic_raw, data)

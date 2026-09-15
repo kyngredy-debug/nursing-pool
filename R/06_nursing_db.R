@@ -277,11 +277,11 @@ test_nursing_queries <- function(db_path = PATHS$db_path) {
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
-  source(here::here("03_nanda_diagnostics.R"))
-  source(here::here("04_noc_outcomes.R"))
-  source(here::here("05_nic_interventions.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
+  source(here::here("R/03_nanda_diagnostics.R"))
+  source(here::here("R/04_noc_outcomes.R"))
+  source(here::here("R/05_nic_interventions.R"))
 
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   nanda <- extract_nanda_diagnostics(data)

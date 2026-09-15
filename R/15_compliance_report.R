@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
   library(here)
 })
 
-source(here::here("config.R"))
+source(here::here("R/config.R"))
 
 dir.create(here::here("docs"), showWarnings = FALSE, recursive = TRUE)
 report_path <- here::here("docs", "compliance_report.md")

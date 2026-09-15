@@ -296,12 +296,12 @@ full_pipeline_audit <- function(data, nanda_raw, nanda_proc,
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
-  source(here::here("03_nanda_diagnostics.R"))
-  source(here::here("04_noc_outcomes.R"))
-  source(here::here("05_nic_interventions.R"))
-  source(here::here("06_nursing_db.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
+  source(here::here("R/03_nanda_diagnostics.R"))
+  source(here::here("R/04_noc_outcomes.R"))
+  source(here::here("R/05_nic_interventions.R"))
+  source(here::here("R/06_nursing_db.R"))
 
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
 

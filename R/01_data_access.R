@@ -192,7 +192,7 @@ main_data_access <- function(mode = PARAMS$mode, data_dir = NULL) {
 
   if (mode == "synthetic") {
     message("[DATA] Modo SINTÉTICO: Gerando dados simulados...")
-    source(here::here("synthetic_data.R"))
+    source(here::here("R/synthetic_data.R"))
     data <- generate_all_synthetic_data()
 
   } else if (mode == "real") {
@@ -223,6 +223,6 @@ main_data_access <- function(mode = PARAMS$mode, data_dir = NULL) {
 
 # Executar se chamado diretamente
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
+  source(here::here("R/config.R"))
   data <- main_data_access()
 }

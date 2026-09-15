@@ -14,8 +14,8 @@ suppressPackageStartupMessages({
   library(shapviz)
 })
 
-source(here::here("config.R"))
-source(here::here("theme_cellpress.R"))
+source(here::here("R/config.R"))
+source(here::here("R/theme_cellpress.R"))
 
 message("\n[SHAP] ===== EXPLICABILIDADE SHAP =====")
 
@@ -25,10 +25,10 @@ split_info <- readRDS(file.path(PATHS$output_dir, "ml", "data_split.rds"))
 data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
 
 # Reconstruir dados de teste
-source(here::here("02_nursing_mapping.R"))
-source(here::here("03_nanda_diagnostics.R"))
-source(here::here("04_noc_outcomes.R"))
-source(here::here("05_nic_interventions.R"))
+source(here::here("R/02_nursing_mapping.R"))
+source(here::here("R/03_nanda_diagnostics.R"))
+source(here::here("R/04_noc_outcomes.R"))
+source(here::here("R/05_nic_interventions.R"))
 
 nanda <- extract_nanda_diagnostics(data)
 nanda <- process_nanda_diagnostics(nanda, data)

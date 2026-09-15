@@ -118,7 +118,7 @@
     }
 
     async function loadTable(name){
-      const url = `https://raw.githubusercontent.com/santosry/nursing-pool/main/data/${name}.csv`;
+      const url = `https://raw.githubusercontent.com/kyngredy-debug/nursing-pool/main/data/${name}.csv`;
       const response = await fetch(url);
       if(!response.ok) return false;
       const text = await response.text();

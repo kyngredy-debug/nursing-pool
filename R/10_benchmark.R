@@ -117,7 +117,7 @@ run_benchmarks <- function(data = NULL) {
 
   # --- Benchmark 9: Análise Estatística ------------------------------------
   b9 <- benchmark_step("09_Statistics", {
-    source(here::here("07_statistical_analysis.R"))
+    source(here::here("R/07_statistical_analysis.R"))
     invisible(main_statistical_analysis(nanda_result, noc_result, nic_result, data))
   })
   benchmarks$step9 <- b9
@@ -174,7 +174,7 @@ benchmark_scalability <- function() {
     PARAMS$n_admissions <- round(n_pat * 1.75)
     PARAMS$n_icu_stays <- round(n_pat * 0.6)
 
-    source(here::here("synthetic_data.R"))
+    source(here::here("R/synthetic_data.R"))
     local_data <- generate_all_synthetic_data()
 
     # Medir tempo para extração NANDA
@@ -210,13 +210,13 @@ benchmark_scalability <- function() {
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("synthetic_data.R"))
-  source(here::here("02_nursing_mapping.R"))
-  source(here::here("03_nanda_diagnostics.R"))
-  source(here::here("04_noc_outcomes.R"))
-  source(here::here("05_nic_interventions.R"))
-  source(here::here("06_nursing_db.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/synthetic_data.R"))
+  source(here::here("R/02_nursing_mapping.R"))
+  source(here::here("R/03_nanda_diagnostics.R"))
+  source(here::here("R/04_noc_outcomes.R"))
+  source(here::here("R/05_nic_interventions.R"))
+  source(here::here("R/06_nursing_db.R"))
 
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   results <- run_benchmarks(data)

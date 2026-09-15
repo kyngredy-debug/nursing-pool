@@ -9,6 +9,41 @@
 
 > **Aviso metodológico essencial:** este projeto não identifica diagnósticos de enfermagem reais no MIMIC-IV. O MIMIC-IV Demo v2.2 não contém registros nativos NANDA-I, NOC ou NIC documentados por enfermeiros. O repositório constrói uma camada derivada, exploratória, auditável e reprodutível para prova de conceito computacional.
 
+---
+
+## Estrutura do repositório
+
+```text
+nursing-pool/
+├── rebuild_transformer_embeddings.py   # Pipeline principal (Python)
+├── rebuild_keywords.py                 # Wrapper de compatibilidade (deprecated)
+├── add_clinical_tables.py              # Adiciona tabelas clínicas MIMIC ao banco
+├── config.py                           # Configuração do pipeline principal
+├── requirements.txt                    # Dependências Python (pipeline principal)
+│
+├── R/                                  # Pipeline legado em R (modo sintético)
+│   ├── pipeline.R                      # Orquestrador do pipeline R
+│   ├── 01_data_access.R … 15_compliance_report.R
+│   ├── config.R                        # Configuração do pipeline R
+│   ├── theme_cellpress.R               # Tema gráfico Cell Press
+│   ├── synthetic_data.R                # Geração de dados sintéticos
+│   └── requirements.R                  # Dependências R
+│
+├── scripts/                            # Geradores de figuras e análises
+│   ├── gerar_figuras_slides.py         # Figuras em PT-BR com fontes ampliadas
+│   ├── gerar_sankey.py                 # Diagrama de Sankey metodológico
+│   └── analises_demonstracao.py        # Análises demonstrativas NNN
+│
+├── data/                               # CSVs publicados (42 tabelas)
+├── docs/                               # Documentação metodológica e site estático
+├── output/                             # Figuras e relatórios gerados
+├── tests/                              # Testes automatizados (pytest)
+├── Dockerfile                          # Container do pipeline R
+├── renv.lock                           # Ambiente R (renv)
+├── CITATION.cff                        # Metadados de citação
+└── LICENSE
+```
+
 ## Tese metodológica
 
 O objetivo do projeto é demonstrar a viabilidade de uma arquitetura relacional orientada à enfermagem a partir de dados clínicos existentes. A contribuição não é afirmar acurácia diagnóstica, validar intervenções ou mensurar resultados assistenciais. A contribuição é separar e documentar três níveis:
@@ -33,6 +68,8 @@ pritamdeka/S-BioBERT-snli-multinli-stsb
 ```
 
 O Transformer é usado para ranqueamento semântico por similaridade de cosseno. Ele não é classificador clínico, não substitui julgamento profissional e não valida diagnósticos. O antigo fallback por TF-IDF foi substituído no pipeline principal e aparece apenas como histórico metodológico.
+
+O pipeline em R (pasta `R/`) é mantido para compatibilidade com o modo sintético; o pipeline em Python é o método principal para dados reais.
 
 ## Números congelados da versão atual
 
@@ -72,6 +109,29 @@ Distribuição das evidências:
 | `fact_nic_recommended` | Recomendações NIC derivadas por regras NANDA-NOC-NIC |
 | `nnn_linkage_rules` | Regras documentadas de ligação terminológica |
 
+## Figuras e análises disponíveis
+
+O repositório inclui figuras prontas (PNG, em português, com fontes ampliadas para
+apresentações) em `output/figures/`:
+
+- **Exploração dos dados** — distribuição do banco (42 tabelas), perfil dos
+  pacientes (idade, sexo, tipo de admissão, seguro, raça, UTI, serviços, desfecho)
+  e aspectos do método (similaridade semântica, keyword vs. Transformer, regras NNN).
+- **Fluxo metodológico** — `Sankey_Metodologia.png`, diagrama do pipeline
+  NANDA-I/NOC/NIC.
+- **Análises demonstrativas** — `FigA_*` a `FigG_*` mostrando o valor de uma base
+  NNN integrada: rastreamento de desfechos (admissão vs. follow-up), vínculo
+  diagnóstico→resultado→intervenção e associação entre carga diagnóstica e
+  desfechos (tempo de UTI, mortalidade). Ver `output/ANALISES_DEMONSTRACAO.md`.
+
+Para regenerar:
+
+```bash
+python scripts/gerar_figuras_slides.py
+python scripts/gerar_sankey.py
+python scripts/analises_demonstracao.py
+```
+
 ## Interpretação segura dos resultados
 
 - Uma hipótese computacional NANDA-I é uma sugestão derivada de evidências parciais. Não é diagnóstico de enfermagem confirmado.
@@ -91,7 +151,7 @@ Distribuição das evidências:
 ## Como reproduzir
 
 ```bash
-git clone https://github.com/santosry/nursing-pool.git
+git clone https://github.com/kyngredy-debug/nursing-pool.git
 cd nursing-pool
 pip install -r requirements.txt
 
@@ -103,6 +163,12 @@ pytest
 ```
 
 O pipeline gera `output/nursing_db.sqlite` e exporta CSVs para `data/`, usados pelo site estático.
+
+Pipeline R (legado, modo sintético):
+
+```bash
+Rscript R/pipeline.R --mode=synthetic
+```
 
 ## Consultas SQL prudentes
 
@@ -140,7 +206,7 @@ LIMIT 20;
 
 ## Site
 
-Consulta SQL estática: https://santosry.github.io/nursing-pool/
+Consulta SQL estática: https://kyngredy-debug.github.io/nursing-pool/
 
 O site carrega os CSVs publicados em `data/` e inclui aviso visível sobre a natureza exploratória, derivada e não validada clinicamente da camada NANDA-I/NOC/NIC.
 

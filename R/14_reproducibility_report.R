@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-source(here::here("config.R"))
+source(here::here("R/config.R"))
 
 dir.create(here::here("docs"), showWarnings = FALSE, recursive = TRUE)
 report_path <- here::here("docs", "reproducibility_report.md")
@@ -86,7 +86,7 @@ report <- c(report, "",
   "",
   "```r",
   "renv::restore()",
-  "source('pipeline.R')",
+  "source('R/pipeline.R')",
   "```",
   "",
   "### Via Docker",
@@ -99,13 +99,13 @@ report <- c(report, "",
   "### Dados Reais (MIMIC-IV Demo)",
   "",
   "```bash",
-  "Rscript pipeline.R --mode=real --data_dir=../mimic-iv-clinical-database-demo-2.2",
+  "Rscript R/pipeline.R --mode=real --data_dir=../mimic-iv-clinical-database-demo-2.2",
   "```",
   "",
   "### Dados Sinteticos (Demonstracao)",
   "",
   "```bash",
-  "Rscript pipeline.R --mode=synthetic",
+  "Rscript R/pipeline.R --mode=synthetic",
   "```",
   "",
   "## Notas",

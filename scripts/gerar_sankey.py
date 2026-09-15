@@ -18,7 +18,7 @@ Uso:
 import os
 import plotly.graph_objects as go
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIG_DIR = os.path.join(BASE_DIR, "output", "figures")
 os.makedirs(FIG_DIR, exist_ok=True)
 

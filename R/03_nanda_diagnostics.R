@@ -173,8 +173,8 @@ save_nanda_results <- function(nanda_data) {
 
 # Executar se chamado diretamente
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   nanda_raw <- extract_nanda_diagnostics(data)
   nanda_processed <- process_nanda_diagnostics(nanda_raw, data)

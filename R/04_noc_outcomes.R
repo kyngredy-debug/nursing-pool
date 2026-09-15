@@ -156,8 +156,8 @@ save_noc_results <- function(noc_data) {
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
-  source(here::here("02_nursing_mapping.R"))
+  source(here::here("R/config.R"))
+  source(here::here("R/02_nursing_mapping.R"))
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   noc_raw <- extract_noc_outcomes(data)
   noc_processed <- process_noc_outcomes(noc_raw, data)

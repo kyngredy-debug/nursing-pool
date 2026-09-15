@@ -453,7 +453,7 @@ generate_all_synthetic_data <- function() {
 
 # Executar se chamado diretamente
 if (sys.nframe() == 0) {
-  source("config.R")
+  source(here::here("R/config.R"))
   data <- generate_all_synthetic_data()
   saveRDS(data, file.path(PATHS$output_dir, "synthetic_data.rds"))
   message("[SYNTHETIC] Dados salvos em output/synthetic_data.rds")

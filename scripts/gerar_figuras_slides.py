@@ -32,7 +32,7 @@ from matplotlib.ticker import FuncFormatter
 # ---------------------------------------------------------------------------
 # Configuração de caminhos
 # ---------------------------------------------------------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 FIG_DIR = os.path.join(BASE_DIR, "output", "figures")
 os.makedirs(FIG_DIR, exist_ok=True)

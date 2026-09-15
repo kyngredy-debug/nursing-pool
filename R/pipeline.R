@@ -11,9 +11,9 @@
 # (NANDA/NOC/NIC) a partir do MIMIC-IV.
 #
 # Uso:
-#   Rscript pipeline.R                      # Modo sintÃ©tico (default)
-#   Rscript pipeline.R --mode=synthetic     # Dados sintÃ©ticos
-#   Rscript pipeline.R --mode=real --data_dir=/path/to/mimic-iv
+#   Rscript R/pipeline.R                      # Modo sintÃ©tico (default)
+#   Rscript R/pipeline.R --mode=synthetic     # Dados sintÃ©ticos
+#   Rscript R/pipeline.R --mode=real --data_dir=/path/to/mimic-iv
 #   python rebuild_transformer_embeddings.py --base-dir ../mimic-iv-clinical-database-demo-2.2
 #
 # Etapas:
@@ -37,7 +37,7 @@ suppressPackageStartupMessages({
 })
 
 # Carregar configuraÃ§Ã£o antes de tudo
-source(here::here("config.R"))
+source(here::here("R/config.R"))
 
 # Parse argumentos de linha de comando
 parse_args <- function() {
@@ -71,7 +71,7 @@ parse_args <- function() {
       parsed$cores <- as.integer(args[i + 1]); i <- i + 2
     } else if (args[i] %in% c("-h", "--help")) {
       cat("Pipeline de Enfermagem MIMIC-IV\n",
-          "Uso: Rscript pipeline.R [opÃ§Ãµes]\n",
+          "Uso: Rscript R/pipeline.R [opÃ§Ãµes]\n",
           "  --mode=synthetic|real   Modo de execuÃ§Ã£o (default: synthetic)\n",
           "  --data_dir=PATH         DiretÃ³rio dos dados MIMIC-IV (modo real)\n",
           "  --skip-viz              Pular geraÃ§Ã£o de grÃ¡ficos\n",
@@ -150,7 +150,7 @@ main <- function() {
   message(" ETAPA 1/10: CARREGAMENTO DE DADOS")
   message(step_line)
 
-  source(here::here("01_data_access.R"))
+  source(here::here("R/01_data_access.R"))
   data <- main_data_access(mode = PARAMS$mode, data_dir = args$data_dir)
 
   # =========================================================================
@@ -161,7 +161,7 @@ main <- function() {
   message(" ETAPA 2/10: MAPEAMENTO NANDA/NOC/NIC â†’ MIMIC-IV")
   message(step_line)
 
-  source(here::here("02_nursing_mapping.R"))
+  source(here::here("R/02_nursing_mapping.R"))
 
   nanda_raw <- extract_nanda_diagnostics(data)
   noc_raw   <- extract_noc_outcomes(data)
@@ -175,7 +175,7 @@ main <- function() {
   message(" ETAPA 3/10: GERAÃ‡ÃƒO DE HIPÃ“TESES NANDA-I")
   message(step_line)
 
-  source(here::here("03_nanda_diagnostics.R"))
+  source(here::here("R/03_nanda_diagnostics.R"))
   nanda <- process_nanda_diagnostics(nanda_raw, data)
   save_nanda_results(nanda)
 
@@ -187,7 +187,7 @@ main <- function() {
   message(" ETAPA 4/10: INDICADORES NOC OPERACIONALIZADOS")
   message(step_line)
 
-  source(here::here("04_noc_outcomes.R"))
+  source(here::here("R/04_noc_outcomes.R"))
   noc <- process_noc_outcomes(noc_raw, data)
   save_noc_results(noc)
 
@@ -199,7 +199,7 @@ main <- function() {
   message(" ETAPA 5/10: PROXIES E RECOMENDAÃ‡Ã•ES NIC")
   message(step_line)
 
-  source(here::here("05_nic_interventions.R"))
+  source(here::here("R/05_nic_interventions.R"))
   nic <- process_nic_interventions(nic_raw, data)
   save_nic_results(nic)
 
@@ -211,7 +211,7 @@ main <- function() {
   message(" ETAPA 6/10: CONSTRUÃ‡ÃƒO DO BANCO DE DADOS DE ENFERMAGEM")
   message(step_line)
 
-  source(here::here("06_nursing_db.R"))
+  source(here::here("R/06_nursing_db.R"))
   db_path <- build_nursing_database(data, nanda, noc, nic)
   test_nursing_queries(db_path)
 
@@ -225,7 +225,7 @@ main <- function() {
     message(" ETAPA 7/10: ANÃLISES ESTATÃSTICAS")
     message(step_line)
 
-    source(here::here("07_statistical_analysis.R"))
+    source(here::here("R/07_statistical_analysis.R"))
     stat_results <- main_statistical_analysis(nanda, noc, nic, data)
   } else {
     message("\n[PIPELINE] AnÃ¡lises estatÃ­sticas puladas (--skip-stat).")
@@ -240,7 +240,7 @@ main <- function() {
     message(" ETAPA 8/10: VISUALIZAÃ‡Ã•ES (CELL PRESS)")
     message(step_line)
 
-    source(here::here("08_visualization.R"))
+    source(here::here("R/08_visualization.R"))
     gerar_todas_figuras(nanda, noc, nic, stat_results)
   } else {
     message("\n[PIPELINE] VisualizaÃ§Ãµes puladas (--skip-viz).")
@@ -254,7 +254,7 @@ main <- function() {
   message(" ETAPA 9/10: AUDITORIA DO PIPELINE")
   message(step_line)
 
-  source(here::here("09_audit.R"))
+  source(here::here("R/09_audit.R"))
   audit_report <- full_pipeline_audit(data, nanda_raw, nanda,
                                        noc_raw, noc,
                                        nic_raw, nic,
@@ -269,7 +269,7 @@ main <- function() {
     message(" ETAPA 10/10: BENCHMARKS DE PERFORMANCE")
     message(step_line)
 
-    source(here::here("10_benchmark.R"))
+    source(here::here("R/10_benchmark.R"))
     bench_results <- run_benchmarks(data)
   } else {
     message("\n[PIPELINE] Benchmarks pulados (--skip-bench).")

@@ -535,7 +535,7 @@ extract_nic_interventions <- function(data) {
 
 # Executar
 if (sys.nframe() == 0) {
-  source(here::here("config.R"))
+  source(here::here("R/config.R"))
   data <- readRDS(file.path(PATHS$cache_dir, "loaded_data.rds"))
   nanda <- extract_nanda_diagnostics(data)
   noc   <- extract_noc_outcomes(data)
