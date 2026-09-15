@@ -400,7 +400,7 @@ ax.set_title("Indicadores NOC Vinculados às Hipóteses NANDA-I", pad=18, loc="l
 ax.set_xlim(0, c5.max() * 1.18)
 ax.grid(axis="y", visible=False)
 fig.text(0.01, -0.02,
-         f"{FONTE}  •  {AVISO}: indicadores operacionalizados, "
+         f"{FONTE}  •  indicadores operacionalizados, "
          "não documentados por enfermeiro.", fontsize=12, color="#777777")
 salvar(fig, "Fig4_NOC")
 
@@ -420,7 +420,7 @@ ax.set_xlim(0, c6.max() * 1.16)
 ax.xaxis.set_major_formatter(FuncFormatter(rotulo_milhar))
 ax.grid(axis="y", visible=False)
 fig.text(0.01, -0.02,
-         f"{FONTE}  •  {AVISO}: registro não distingue prescritor "
+         f"{FONTE}  •  registro não distingue prescritor "
          "nem confirma intervenção NIC autônoma.", fontsize=12, color="#777777")
 salvar(fig, "Fig5_Proxies_NIC")
 
