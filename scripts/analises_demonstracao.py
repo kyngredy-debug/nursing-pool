@@ -277,42 +277,52 @@ print("FigF: Carga diagnóstica vs desfecho...")
 adm2 = adm.groupby("subject_id")["hospital_expire_flag"].max().reset_index(name="obito")
 df2 = carga.merge(adm2, on="subject_id").merge(icu2, on="subject_id", how="left")
 med = df2["n_hip"].median()
-df2["grupo"] = np.where(df2["n_hip"] > med, "Alta carga\n(> mediana)", "Baixa carga\n(≤ mediana)")
+df2["grupo"] = np.where(df2["n_hip"] > med, "Alta carga", "Baixa carga")
 resumo = df2.groupby("grupo").agg(
     mortalidade=("obito", "mean"),
     los_medi=("los_uti", "median"),
     n=("subject_id", "count"),
-).reindex(["Baixa carga\n(≤ mediana)", "Alta carga\n(> mediana)"])
+).reindex(["Baixa carga", "Alta carga"])
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+fig, axes = plt.subplots(1, 2, figsize=(14, 6.4))
 # Mortalidade
 bars = axes[0].bar(resumo.index, resumo["mortalidade"] * 100,
-                    color=[C["verde"], C["vermelho"]], width=0.55, alpha=0.9)
+                    color=[C["verde"], C["vermelho"]], width=0.5, alpha=0.9)
 for b, v in zip(bars, resumo["mortalidade"] * 100):
-    axes[0].text(b.get_x() + b.get_width() / 2, b.get_height() + 1,
+    axes[0].text(b.get_x() + b.get_width() / 2, b.get_height() + 1.2,
                  f"{fmt_br(v, 1)}%", ha="center", va="bottom",
                  fontsize=18, fontweight="bold", color="#222222")
 axes[0].set_ylabel("Mortalidade hospitalar (%)")
 axes[0].set_title("Mortalidade por Carga Diagnóstica", pad=12)
-axes[0].set_ylim(0, 35)
+axes[0].set_ylim(0, 38)
 axes[0].grid(axis="x", visible=False)
+axes[0].tick_params(axis="x", length=0)
 # LOS
 bars = axes[1].bar(resumo.index, resumo["los_medi"],
-                   color=[C["verde"], C["vermelho"]], width=0.55, alpha=0.9)
+                   color=[C["verde"], C["vermelho"]], width=0.5, alpha=0.9)
 for b, v in zip(bars, resumo["los_medi"]):
-    axes[1].text(b.get_x() + b.get_width() / 2, b.get_height() + 0.15,
+    axes[1].text(b.get_x() + b.get_width() / 2, b.get_height() + 0.18,
                  f"{fmt_br(v, 1)} dias", ha="center", va="bottom",
                  fontsize=18, fontweight="bold", color="#222222")
 axes[1].set_ylabel("Mediana do tempo de UTI (dias)")
 axes[1].set_title("Permanência em UTI por Carga Diagnóstica", pad=12)
-axes[1].set_ylim(0, 7)
+axes[1].set_ylim(0, 7.5)
 axes[1].grid(axis="x", visible=False)
+axes[1].tick_params(axis="x", length=0)
+
+# Legenda das cores dentro da área vazia do gráfico (sem sobrepor rótulos)
+handles = [plt.Rectangle((0, 0), 1, 1, color=C["verde"], alpha=0.9),
+           plt.Rectangle((0, 0), 1, 1, color=C["vermelho"], alpha=0.9)]
+axes[0].legend(handles, ["Baixa carga (≤ mediana)", "Alta carga (> mediana)"],
+               loc="upper left", frameon=False, fontsize=13, handlelength=1.0)
+
 fig.suptitle("Carga de Diagnósticos NANDA-I e Desfechos Clínicos",
-             fontsize=21, fontweight="bold")
-fig.text(0.01, -0.02,
+             fontsize=21, fontweight="bold", y=0.98)
+fig.subplots_adjust(left=0.09, right=0.97, top=0.85, bottom=0.24, wspace=0.24)
+fig.text(0.5, 0.03,
          f"Divisão pela mediana de hipóteses por paciente ({med:.0f}). "
          "Alta carga diagnóstica → mortalidade 3,1× maior e permanência em UTI 2,5× maior.",
-         fontsize=12, color="#777777")
+         ha="center", va="bottom", fontsize=12, color="#777777")
 salvar(fig, "FigF_Carga_Desfecho")
 
 # ===========================================================================
